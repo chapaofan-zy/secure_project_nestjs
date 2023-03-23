@@ -7,16 +7,16 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('login')
-  async login(@Body() param, @Res() res) {
+  async login(@Body() param, @Res() res, @Req() req) {
     const { username, password } = param;
-    const serviceLogin = await this.userService.login(res, username, password);
+    const serviceLogin = await this.userService.login(req, username, password);
     res.send(serviceLogin);
   }
 
   @Post('register')
-  async register(@Body() param, @Res() res) {
+  async register(@Body() param, @Res() res, @Req() req) {
     const { username, password } = param;
-    const result = await this.userService.addOne(res, {
+    const result = await this.userService.addOne(req, {
       id: get_id(),
       username,
       password,

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { publishJWT, verifyJWT } from 'src/utils/jwt';
+import { publishJWT } from 'src/utils/jwt';
 import { CreateUserDTO, EditUserDTO } from './dto/user.dto';
 import { IUser } from './interface/user.interface';
 
@@ -26,13 +26,15 @@ export class UserService {
   }
 
   // 添加单个用户
-  async addOne(response, body: CreateUserDTO) {
+  async addOne(req, body: CreateUserDTO) {
     if (body.username === (await this.findOne(body))?.username) {
       return 'failed';
     }
     const res = await this.userModel.create(body);
     console.log('添加结果：', res);
-    const result = publishJWT(response, body);
+    const result = publishJWT(body);
+    req.session.username = body.username;
+    req.session.token = result;
     console.log('登录成功！');
     console.log('token -----> ', result);
     return result;
@@ -48,7 +50,7 @@ export class UserService {
     await this.userModel.findByIdAndDelete(_id);
   }
 
-  async login(res, username: string, password: string) {
+  async login(req, username: string, password: string) {
     const result = await this.findOne({ username });
     const obj = { flag: false, content: '', token: undefined };
     if (!result) {
@@ -58,7 +60,9 @@ export class UserService {
       console.log(username, '密码错误！');
       obj.content = '密码错误！';
     } else {
-      const jwtToken = publishJWT(res, { username, password });
+      const jwtToken = publishJWT({ username, password });
+      req.session.username = username;
+      req.session.token = jwtToken;
       console.log('登录成功！');
       console.log('token -----> ', jwtToken);
       obj.flag = true;
@@ -68,6 +72,8 @@ export class UserService {
   }
 
   test(req) {
-    return verifyJWT(req);
+    console.log(req.session, 'cookie');
+
+    return 'test';
   }
 }
