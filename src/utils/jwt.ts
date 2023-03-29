@@ -20,7 +20,7 @@ export function verifyJWT(req) {
   const token = t.length === 1 ? t[0] : t[1];
   try {
     const result = verifyToken(token) as JwtPayload;
-    console.log('verifying ----->' + result);
+    // console.log('verifying ----->' + result);
     req.session.username = result.username;
     req.session.token = token;
     return true;

@@ -21,13 +21,13 @@ export class UserService {
   }
 
   // 查找单个用户
-  async findOne(body): Promise<IUser> {
-    return await this.userModel.findOne({ username: body.username });
+  async findOne(username): Promise<IUser> {
+    return await this.userModel.findOne({ username });
   }
 
   // 添加单个用户
   async addOne(req, body: CreateUserDTO) {
-    if (body.username === (await this.findOne(body))?.username) {
+    if (body.username === (await this.findOne(body.username))?.username) {
       return 'failed';
     }
     const res = await this.userModel.create(body);
@@ -51,7 +51,7 @@ export class UserService {
   }
 
   async login(req, username: string, password: string) {
-    const result = await this.findOne({ username });
+    const result = await this.findOne(username);
     const obj = { flag: false, content: '', token: undefined };
     if (!result) {
       console.log(username, '用户不存在');

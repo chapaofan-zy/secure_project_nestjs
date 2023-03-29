@@ -29,8 +29,8 @@ export class UserController {
     res.send({ token: result, result: 'success' });
   }
 
-  @Get()
-  getTest(@Req() req) {
-    return this.userService.test(req);
+  @Get('info')
+  getInfo(@Req() req) {
+    return this.userService.findOne(req.session.username);
   }
 }
