@@ -3,6 +3,5 @@
   "builds": [{ "src": "dist/index.js", "use": "@vercel/node" }],
   "buildCommand": "npm run build",
   "devCommand": "yarn start:prod",
-  "outputDirectory": "dist",
   "installCommand": "yarn install"
 }
