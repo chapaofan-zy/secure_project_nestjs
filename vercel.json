@@ -1,19 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "dist/main.js",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "dist/main.ts"
     }
-  ],
-  "outputDirectory": "dist",
-  "installCommand": "yarn install",
-  "buildCommand": "npm run build",
-  "devCommand": "yarn start:prod"
+  ]
 }
