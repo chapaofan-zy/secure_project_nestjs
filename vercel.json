@@ -3,13 +3,13 @@
   "builds": [
     {
       "src": "dist/index.js",
-      "use": "@vercel/node",
-      "buildCommand": "npm run build",
-      "devCommand": "yarn start:prod",
-      "installCommand": "yarn install"
+      "use": "@vercel/node"
     }
   ],
-  "buildCommand": "npm run build",
-  "devCommand": "yarn start:prod",
-  "installCommand": "yarn install"
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/index.js"
+    }
+  ]
 }
