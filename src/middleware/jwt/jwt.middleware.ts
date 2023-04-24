@@ -1,6 +1,6 @@
 import { verifyJWT } from 'src/utils/jwt';
 
-const excloudUrl = ['/api/users/login', '/api/users/register'];
+const excloudUrl = ['/api/users/login', '/api/users/register', '/api'];
 
 export function JwtMiddleware(req: any, res: any, next: () => void) {
   if (verifyJWT(req) || excloudUrl.includes(req.url)) {
