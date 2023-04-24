@@ -11,5 +11,9 @@
       "src": "/(.*)",
       "dest": "dist/main.ts"
     }
-  ]
+  ],
+  "outputDirectory": "dist",
+  "installCommand": "yarn install",
+  "buildCommand": "npm run build",
+  "devCommand": "yarn start:prod"
 }
